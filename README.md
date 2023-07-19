@@ -20,7 +20,7 @@
 
 ## 项目预览
 
-- **在线预览**： [https://vue3.youlai.tech/](https://vue3.youlai.tech/)
+<!-- - **在线预览**： [https://vue3.youlai.tech/](https://vue3.youlai.tech/) -->
 
 - **控制台**
 
@@ -32,12 +32,12 @@
  | --- | --- |
  | ![image-20230313003028425](https://s2.loli.net/2023/03/13/C4fDRJeTuUO7gPI.png) | ![字典管理](https://s2.loli.net/2023/03/13/BzqjHpa64wfeWhE.png) |
 
-## 项目地址
+<!-- ## 项目地址
 
 | 项目 | Gitee | Github |GitCode |
 | --- | --- | --- | --- |
 | 前端 | [vue3-element-admin](https://gitee.com/youlaiorg/vue3-element-admin) | [vue3-element-admin](https://github.com/youlaitech/vue3-element-admin) |[vue3-element-admin](https://gitcode.net/youlai/vue3-element-admin)|
-| 后端 | [youlai-boot](https://gitee.com/youlaiorg/youlai-boot) | [youlai-boot](https://github.com/haoxianrui/youlai-boot.git) |[youlai-boot](https://gitcode.net/youlai/youlai-boot)|
+| 后端 | [youlai-boot](https://gitee.com/youlaiorg/youlai-boot) | [youlai-boot](https://github.com/haoxianrui/youlai-boot.git) |[youlai-boot](https://gitcode.net/youlai/youlai-boot)| -->
 
 ## 环境准备
 
@@ -51,7 +51,7 @@
 
 ```bash
 # 克隆代码
-git clone https://gitee.com/youlaiorg/vue3-element-admin.git
+git clone https://github.com/guoliman/vue3-bashItem-f.git
 
 # 安装 pnpm
 npm install pnpm -g
@@ -82,7 +82,7 @@ server {
  }
  # 反向代理配置
  location /prod-api/ {
-   proxy_pass http://vapi.youlai.tech/; # vapi.youlai.tech替换成你的后端API地址
+   proxy_pass http://127.0.0.1:8888/; # 替换成你的后端API地址
  }
 }
 ```
