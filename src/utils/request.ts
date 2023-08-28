@@ -1,11 +1,11 @@
-import axios, { InternalAxiosRequestConfig, AxiosResponse } from 'axios';
-import { useUserStoreHook } from '@/store/modules/user';
+import axios, { InternalAxiosRequestConfig, AxiosResponse } from "axios";
+import { useUserStoreHook } from "@/store/modules/user";
 
 // 创建 axios 实例
 const service = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_API,
   timeout: 50000,
-  headers: { 'Content-Type': 'application/json;charset=utf-8' }
+  headers: { "Content-Type": "application/json;charset=utf-8" },
 });
 
 // 请求拦截器
@@ -24,9 +24,9 @@ service.interceptors.request.use(
 
 // 响应拦截器
 service.interceptors.response.use(
-  (response: AxiosResponse) => { 
+  (response: AxiosResponse) => {
     const { code, msg } = response.data;
-    if (code === '00000' || code === 200) {
+    if (code === "00000" || code === 200) {
       return response.data;
     }
     // 响应数据为二进制流处理(Excel导出)
@@ -41,13 +41,13 @@ service.interceptors.response.use(
     if (error.response.data) {
       const { code, msg } = error.response.data;
       // token 过期,重新登录
-      if (code === 'A0230') {
-        ElMessageBox.confirm('当前页面已失效，请重新登录', '提示', {
-          confirmButtonText: '确定',
-          type: 'warning'
+      if (code === "A0230") {
+        ElMessageBox.confirm("当前页面已失效，请重新登录", "提示", {
+          confirmButtonText: "确定",
+          type: "warning",
         }).then(() => {
           localStorage.clear();
-          window.location.href = '/';
+          window.location.href = "/";
         });
       } else {
         ElMessage.error(msg || '系统报错: 后端无响应');

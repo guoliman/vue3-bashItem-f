@@ -17,13 +17,8 @@ const multiPicUrls = ref([
 </script>
 <template>
   <div class="app-container">
-    <el-link
-      href="https://gitee.com/youlaiorg/vue3-element-admin/blob/master/src/views/demo/upload.vue"
-      type="primary"
-      target="_blank"
-      class="mb-10"
-      >示例源码 请点击>>>></el-link
-    >
+    <el-link href="https://www.baidu.com/vue3-bashItem-f" type="primary" target="_blank" class="mb-10">示例源码
+      请点击>>>></el-link>
 
     <el-form>
       <el-form-item label="单图上传">

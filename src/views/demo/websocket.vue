@@ -1,17 +1,17 @@
 <!-- websocket 示例 -->
 <script setup lang="ts">
-import { sendToAll, sendToUser } from "@/api/websocket";
+import { sendToAll, sendToUser } from "@/api/websocket"; // 点对点消息列表
+
+import { useUserStore } from "@/store/modules/user";
+
+import { useWebSocket } from "@vueuse/core";
 
 const inputVal = ref("初始内容");
 
 const topicMsgs = ref<string[]>(["接收到一条主题消息"]); // 主题消息列表
-const p2pMsgs = ref<string[]>(["接收到一条点对线消息"]); // 点对点消息列表
-
-import { useUserStore } from "@/store/modules/user";
+const p2pMsgs = ref<string[]>(["接收到一条点对线消息"]);
 
 const userId = useUserStore().userId;
-
-import { useWebSocket } from "@vueuse/core";
 
 const { data, status, close, send, open } = useWebSocket(
   "ws://localhost:8989/ws",
@@ -72,25 +72,19 @@ function handleSendToAll() {
 function handleSendToUser() {
   sendToUser(userId, inputVal.value);
 }
-onMounted(() => {});
+onMounted(() => { });
 </script>
 
 <template>
   <div class="app-container">
-    <el-link
-      href="https://gitee.com/youlaiorg/vue3-element-admin/blob/master/src/views/demo/websocket.vue"
-      type="primary"
-      target="_blank"
-      class="mb-[20px]"
-      >示例源码 请点击>>>></el-link
-    >
+    <el-link href="https://www.baidu.com/vue3-bashItem-f" type="primary" target="_blank" class="mb-[20px]">示例源码
+      请点击>>>></el-link>
 
     <div>
-      <div class="search">
+      <div class="search-container">
         <el-form :inline="true">
           <el-form-item> <el-input v-model="inputVal" /></el-form-item>
-          <el-form-item
-            ><el-button @click="handleSendToUser">发送点对点消息</el-button>
+          <el-form-item><el-button @click="handleSendToUser">发送点对点消息</el-button>
             <el-button @click="handleSendToAll">发送广播消息</el-button>
           </el-form-item>
         </el-form>

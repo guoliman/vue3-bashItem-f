@@ -1,9 +1,15 @@
-登录页-源版
 <template>
   <div class="login-container">
-    <el-form ref="loginFormRef" :model="loginData" :rules="loginRules" class="login-form">
-      <div class="flex text-white items-center py-4">
-        <span class="text-2xl flex-1 text-center">{{ $t("login.title") }}</span>
+    <el-form
+      ref="loginFormRef"
+      :model="loginData"
+      :rules="loginRules"
+      class="login-form"
+    >
+      <div class="flex text-white items-center py-4 title-wrap">
+        <span class="text-2xl flex-1 text-center title">
+          {{ $t("login.title") }}
+        </span>
         <lang-select class="text-white! cursor-pointer" />
       </div>
 
@@ -11,26 +17,46 @@
         <div class="p-2 text-white">
           <svg-icon icon-class="user" />
         </div>
-        <el-input ref="username" v-model="loginData.username" class="flex-1" size="large"
-          :placeholder="$t('login.username')" name="username" />
+        <el-input
+          ref="username"
+          v-model="loginData.username"
+          class="flex-1"
+          size="large"
+          :placeholder="$t('login.username')"
+          name="username"
+        />
       </el-form-item>
 
-      <el-tooltip :disabled="isCapslock === false" content="Caps lock is On" placement="right">
+      <el-tooltip
+        :disabled="isCapslock === false"
+        content="Caps lock is On"
+        placement="right"
+      >
         <el-form-item prop="password">
           <span class="p-2 text-white">
             <svg-icon icon-class="password" />
           </span>
-          <el-input v-model="loginData.password" class="flex-1" placeholder="密码"
-            :type="passwordVisible === false ? 'password' : 'input'" size="large" name="password" @keyup="checkCapslock"
-            @keyup.enter="handleLogin" />
+          <el-input
+            v-model="loginData.password"
+            class="flex-1"
+            placeholder="密码"
+            :type="passwordVisible === false ? 'password' : 'input'"
+            size="large"
+            name="password"
+            @keyup="checkCapslock"
+            @keyup.enter="handleLogin"
+          />
           <span class="mr-2" @click="passwordVisible = !passwordVisible">
-            <svg-icon :icon-class="passwordVisible === false ? 'eye' : 'eye-open'" class="text-white cursor-pointer" />
+            <svg-icon
+              :icon-class="passwordVisible === false ? 'eye' : 'eye-open'"
+              class="text-white cursor-pointer"
+            />
           </span>
         </el-form-item>
       </el-tooltip>
 
       <!-- 验证码 -->
-      <!-- <el-form-item prop="verifyCode">
+      <el-form-item prop="verifyCode">
         <span class="p-2 text-white">
           <svg-icon icon-class="verify_code" />
         </span>
@@ -45,24 +71,27 @@
         <div class="captcha">
           <img :src="captchaBase64" @click="getCaptcha" />
         </div>
-      </el-form-item> -->
+      </el-form-item>
 
-      <el-button size="default" :loading="loading" type="primary" class="w-full" @click.prevent="handleLogin">{{
-        $t("login.login") }}
+      <el-button
+        size="default"
+        :loading="loading"
+        type="primary"
+        class="w-full"
+        @click.prevent="handleLogin"
+        >{{ $t("login.login") }}
       </el-button>
 
       <!-- 账号密码提示 -->
-      <!-- <div class="mt-4 text-white text-sm">
+      <div class="mt-4 text-white text-sm">
         <span>{{ $t("login.username") }}: admin</span>
         <span class="ml-4"> {{ $t("login.password") }}: 123456</span>
-      </div> -->
-
+      </div>
     </el-form>
   </div>
 </template>
 
 <script setup lang="ts">
-
 import router from "@/router";
 import LangSelect from "@/components/LangSelect/index.vue";
 import SvgIcon from "@/components/SvgIcon/index.vue";
@@ -93,7 +122,7 @@ const passwordVisible = ref(false);
 /**
  * 验证码图片Base64字符串
  */
-// const captchaBase64 = ref();
+const captchaBase64 = ref();
 
 /**
  * 登录表单引用
@@ -101,24 +130,22 @@ const passwordVisible = ref(false);
 const loginFormRef = ref(ElForm);
 
 const loginData = ref<LoginData>({
-  username: "",
-  password: "",
-  // username: "admin",
-  // password: "123456",
+  username: "admin",
+  password: "123456",
 });
 
 const loginRules = {
   username: [{ required: true, trigger: "blur" }],
   password: [{ required: true, trigger: "blur", validator: passwordValidator }],
-  // verifyCode: [{ required: true, trigger: "blur" }],
+  verifyCode: [{ required: true, trigger: "blur" }],
 };
 
 /**
  * 密码校验器
  */
 function passwordValidator(rule: any, value: any, callback: any) {
-  if (value.length < 2) {
-    callback(new Error("密码长度不能小于2"));
+  if (value.length < 6) {
+    callback(new Error("The password can not be less than 6 digits"));
   } else {
     callback();
   }
@@ -135,13 +162,13 @@ function checkCapslock(e: any) {
 /**
  * 获取验证码
  */
-// function getCaptcha() {
-// getCaptchaApi().then(({ data }) => {
-// const { verifyCodeBase64, verifyCodeKey } = data;
-// loginData.value.verifyCodeKey = verifyCodeKey;
-// captchaBase64.value = verifyCodeBase64;
-// });
-// }
+function getCaptcha() {
+  getCaptchaApi().then(({ data }) => {
+    const { verifyCodeBase64, verifyCodeKey } = data;
+    loginData.value.verifyCodeKey = verifyCodeKey;
+    captchaBase64.value = verifyCodeBase64;
+  });
+}
 
 /**
  * 登录
@@ -171,7 +198,7 @@ function handleLogin() {
         })
         .catch(() => {
           // 验证失败，重新生成验证码
-          // getCaptcha();
+          getCaptcha();
         })
         .finally(() => {
           loading.value = false;
@@ -181,7 +208,7 @@ function handleLogin() {
 }
 
 onMounted(() => {
-  // getCaptcha(); // 获取图片验证接口
+  getCaptcha();
 });
 </script>
 
@@ -191,6 +218,25 @@ onMounted(() => {
   min-height: 100%;
   overflow: hidden;
   background-color: #2d3a4b;
+
+  .title-wrap {
+    filter: contrast(30);
+
+    .title {
+      letter-spacing: 4px;
+      animation: showup 3s forwards;
+    }
+
+    @keyframes showup {
+      0% {
+        letter-spacing: -20px;
+      }
+
+      100% {
+        letter-spacing: 4px;
+      }
+    }
+  }
 
   .login-form {
     width: 520px;

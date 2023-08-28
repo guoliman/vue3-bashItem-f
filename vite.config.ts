@@ -11,13 +11,19 @@ import IconsResolver from "unplugin-icons/resolver";
 
 import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 
-import UnoCSS from "unocss/vite";
+import { viteMockServe } from "vite-plugin-mock";
+import visualizer from "rollup-plugin-visualizer";
 
+import UnoCSS from "unocss/vite";
 import path from "path";
+
+import viteCompression from "vite-plugin-compression";
+
 const pathSrc = path.resolve(__dirname, "src");
 
 export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
   const env = loadEnv(mode, process.cwd());
+
   return {
     resolve: {
       alias: {
@@ -43,49 +49,50 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
       proxy: {
         // 反向代理解决跨域
         [env.VITE_APP_BASE_API]: {
-          // target: "http://vapi.youlai.tech", // 线上接口地址
-          target: 'http://localhost:8089',  // 本地接口地址 , 后端工程仓库地址：https://gitee.com/youlaiorg/youlai-boot
+          target: env.VITE_APP_TARGET_URL, // 后端连接地址
           changeOrigin: true,
           rewrite: (path) =>
-            path.replace(new RegExp("^" + env.VITE_APP_BASE_API), ""), // 替换 /dev-api 为 target 接口地址
+            path.replace(  new RegExp("^" + env.VITE_APP_BASE_API),  env.VITE_APP_TARGET_BASE_API ), // 替换 /dev-api 为 target 接口地址
         },
       },
     },
     plugins: [
       vue(),
-      UnoCSS({
-        /* options */
-      }),
+      UnoCSS({}),
       AutoImport({
         // 自动导入 Vue 相关函数，如：ref, reactive, toRef 等
         imports: ["vue", "@vueuse/core"],
         eslintrc: {
-          enabled: false, //  Default `false`
-          filepath: "./.eslintrc-auto-import.json", // Default `./.eslintrc-auto-import.json`
-          globalsPropValue: true, // Default `true`, (true | false | 'readonly' | 'readable' | 'writable' | 'writeable')
+          enabled: false,
+          filepath: "./.eslintrc-auto-import.json",
+          globalsPropValue: true,
         },
         resolvers: [
           // 自动导入 Element Plus 相关函数，如：ElMessage, ElMessageBox... (带样式)
           ElementPlusResolver(),
-          // 自动导入图标组件
           IconsResolver({}),
         ],
-        vueTemplate: true, // 是否在 vue 模板中自动导入
-        dts: false, // 关闭自动生成
-        //dts: path.resolve(pathSrc, "types", "auto-imports.d.ts"), //  自动导入组件类型声明文件位置，默认根目录
+        vueTemplate: true,
+        // 配置文件生成位置(false:关闭自动生成)
+        dts: false,
+        // dts: "src/types/auto-imports.d.ts",
       }),
 
       Components({
         resolvers: [
-          // 自动注册图标组件
-          IconsResolver({
-            enabledCollections: ["ep"], //@iconify-json/ep 是 Element Plus 的图标库
-          }),
           // 自动导入 Element Plus 组件
           ElementPlusResolver(),
+          // 自动导入图标组件
+          IconsResolver({
+            // @iconify-json/ep 是 Element Plus 的图标库
+            enabledCollections: ["ep"],
+          }),
         ],
-        dts: false, // 关闭自动生成
-        // dts: path.resolve(pathSrc, "types", "components.d.ts"), //  自动导入组件类型声明文件位置，默认根目录
+        // 指定自定义组件位置(默认:src/components)
+        dirs: ["src/**/components"],
+        // 配置文件位置(false:关闭自动生成)
+        dts: false,
+        // dts: "src/types/components.d.ts",
       }),
 
       Icons({
@@ -99,8 +106,31 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
         // 指定symbolId格式
         symbolId: "icon-[dir]-[name]",
       }),
-    ],
+      // 代码压缩
+      viteCompression({
+        verbose: true, // 默认即可
+        disable: true, // 是否禁用压缩，默认禁用，true为禁用,false为开启，打开压缩需配置nginx支持
+        deleteOriginFile: true, // 删除源文件
+        threshold: 10240, // 压缩前最小文件大小
+        algorithm: "gzip", // 压缩算法
+        ext: ".gz", // 文件类型
+      }),
 
+      viteMockServe({
+        ignore: /^\_/,
+        mockPath: "mock",
+        enable: mode === "development",
+        // https://github.com/anncwb/vite-plugin-mock/issues/9
+      }),
+
+      visualizer({
+        filename: "./stats.html",
+        open: false,
+        gzipSize: true,
+        brotliSize: true,
+      }),
+    ],
+    // 预加载项目必需的组件
     optimizeDeps: {
       include: [
         "vue",
@@ -144,7 +174,16 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
         "element-plus/es/components/pagination/style/css",
         "element-plus/es/components/tree/style/css",
         "element-plus/es/components/alert/style/css",
+        "element-plus/es/components/radio-button/style/css",
+        "element-plus/es/components/checkbox-group/style/css",
+        "element-plus/es/components/checkbox/style/css",
+        "element-plus/es/components/tabs/style/css",
+        "element-plus/es/components/tab-pane/style/css",
+        "element-plus/es/components/rate/style/css",
+        "element-plus/es/components/date-picker/style/css",
+        "element-plus/es/components/notification/style/css",
         "@vueuse/core",
+        "sortablejs",
 
         "path-to-regexp",
         "echarts",

@@ -4,6 +4,7 @@ import { usePermissionStoreHook } from "@/store/modules/permission";
 
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
+
 NProgress.configure({ showSpinner: false }); // 进度条
 
 const permissionStore = usePermissionStoreHook();
@@ -12,7 +13,7 @@ const permissionStore = usePermissionStoreHook();
 const whiteList = ["/login"];
 
 router.beforeEach(async (to, from, next) => {
-  NProgress.start();  // 开启进度条
+  NProgress.start();
   const hasToken = localStorage.getItem("accessToken");
   if (hasToken) {
     if (to.path === "/login") {

@@ -1,251 +1,219 @@
-body[layout="left"] {
-  #app {
-    // 整体左移动 导航栏和收缩按钮没了 这个先不管
-    .main-container {
-      position: relative;
-      min-height: 100%;
-      margin-left: $sideBarWidth;
-      transition: margin-left 0.28s;
-    }
-
-    // 整体样式消失
-    .sidebar-container {
-      position: fixed;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      z-index: 1001;
-      width: $sideBarWidth !important;
-      height: 100%;
-      overflow: hidden;
-      background-color: $menuBg;
-      transition: width 0.28s;
-
-      // reset element-ui css
-      .horizontal-collapse-transition {
-        transition: 0s width ease-in-out, 0s padding-left ease-in-out,
-          0s padding-right ease-in-out;
-      }
-
-      .scrollbar-wrapper {
-        overflow-x: hidden !important;
-      }
-
-      .el-scrollbar__bar.is-vertical {
-        right: 0;
-      }
-
-      .el-scrollbar {
-        height: 100%;
-      }
-
-      &.has-logo {
-        .el-scrollbar {
-          height: calc(100% - 50px);
-        }
-      }
-
-      .is-horizontal {
-        display: none;
-      }
-
-      .svg-icon {
-        margin-right: 16px;
-      }
-
-      .sub-el-icon {
-        margin-right: 12px;
-        margin-left: -2px;
-      }
-
-      .el-menu {
-        width: 100% !important;
-        height: 100%;
-        border: none;
-      }
-
-      // menu hover
-      .el-sub-menu__title {
-        &:hover {
-          background-color: $menuHover !important;
-        }
-      }
-
-      .is-active>.el-sub-menu__title {
-        color: $subMenuActiveText !important;
-      }
-
-      & .nest-menu .el-sub-menu>.el-sub-menu__title,
-      & .el-sub-menu .el-menu-item {
-        min-width: $sideBarWidth !important;
-        background-color: $subMenuBg !important;
-
-        &:hover {
-          background-color: $subMenuHover !important;
-        }
-      }
-    }
-
-    // 展示第二层 及 左侧收缩
-    .hideSidebar {
-      // 点击后 左侧伸缩按钮消失及左侧label名消失
-      .sidebar-container {
-        width: 54px !important;
-
-        .svg-icon {
-          margin-right: 0;
-        }
-      }
-
-      // 点击伸缩
-      .main-container {
-        margin-left: 54px;
-      }
-
-      // 第一层图标的控制
-      .el-sub-menu {
-        overflow: hidden;
-
-        &>.el-sub-menu__title {
-          padding: 0 !important;
-
-          .svg-icon {
-            margin-left: 20px;
-          }
-
-          .sub-el-icon {
-            margin-left: 19px;
-          }
-
-          .el-sub-menu__icon-arrow {
-            display: none;
-          }
-        }
-      }
-      // 左侧lable名消失
-      .el-menu--collapse {
-        .el-sub-menu {
-          &>.el-sub-menu__title {
-            &>span {
-              display: inline-block;
-              width: 0;
-              height: 0;
-              overflow: hidden;
-              visibility: hidden;
-            }
-          }
-        }
-      }
-    }
-
-    // 没测出效果 可能公用
-    .el-menu--collapse .el-menu .el-sub-menu {
-      min-width: $sideBarWidth !important;
-    }
-    // 没测出效果 可能公用
-    mobile responsive
-    .mobile {
-      .main-container {
-        margin-left: 0;
-      }
-
-      .sidebar-container {
-        width: $sideBarWidth !important;
-        transition: transform 0.28s;
-      }
-
-      &.hideSidebar {
-        .sidebar-container {
-          pointer-events: none;
-          transition-duration: 0.3s;
-          transform: translate3d(-$sideBarWidth, 0, 0);
-        }
-      }
-    }
-    // 没测出效果 可能公用
-    .withoutAnimation {
-      .main-container,
-      .sidebar-container {
-        transition: none;
-      }
-    }
+.app {
+  .main-container {
+    position: relative;
+    min-height: 100%;
+    margin-left: $sideBarWidth;
+    transition: margin-left 0.28s;
   }
 
-  // 当菜单折叠时 //没测出效果 可能公用
-  .el-menu--vertical {
-    &>.el-menu {
-      .svg-icon {
-        margin-right: 16px;
-      }
+  .sidebar-container {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1001;
+    width: $sideBarWidth !important;
+    height: 100%;
+    overflow: hidden;
+    background-color: $menuBg;
+    transition: width 0.28s;
 
-      .sub-el-icon {
-        margin-right: 12px;
-        margin-left: -2px;
+    // reset element-ui css
+    .horizontal-collapse-transition {
+      transition: 0s width ease-in-out, 0s padding-left ease-in-out,
+        0s padding-right ease-in-out;
+    }
+
+    .scrollbar-wrapper {
+      overflow-x: hidden !important;
+    }
+
+    .el-scrollbar__bar.is-vertical {
+      right: 0;
+    }
+
+    .el-scrollbar {
+      height: 100%;
+    }
+
+    &.has-logo {
+      .el-scrollbar {
+        height: calc(100% - 50px);
       }
     }
 
-    .nest-menu .el-sub-menu>.el-sub-menu__title,
-    .el-menu-item {
+    .is-horizontal {
+      display: none;
+    }
+
+    .svg-icon {
+      margin-right: 12px;
+    }
+
+    .sub-el-icon {
+      margin-right: 12px;
+      margin-left: -2px;
+    }
+
+    .el-menu {
+      width: 100% !important;
+      height: 100%;
+      border: none;
+    }
+
+    // menu hover
+    .el-sub-menu__title {
       &:hover {
-        // 能使用 $subMenuHover
         background-color: $menuHover !important;
       }
     }
 
-    // 当子菜单太长时会出现滚动条
-    >.el-menu--popup {
-      max-height: 100vh;
-      overflow-y: auto;
+    .is-active > .el-sub-menu__title {
+      color: $subMenuActiveText !important;
+    }
 
-      &::-webkit-scrollbar-track-piece {
-        background: #d3dce6;
+    & .nest-menu .el-sub-menu > .el-sub-menu__title,
+    & .el-sub-menu .el-menu-item {
+      min-width: $sideBarWidth !important;
+      background-color: $subMenuBg !important;
+
+      &:hover {
+        background-color: $subMenuHover !important;
+      }
+    }
+  }
+
+  .left-wrap {
+    .svg-icon {
+      margin-top: -2px;
+      margin-right: 12px;
+    }
+  }
+
+  .hideSidebar {
+    .sidebar-container {
+      width: 54px !important;
+
+      .svg-icon {
+        margin-right: 0;
       }
 
-      &::-webkit-scrollbar {
-        width: 6px;
+      .header {
+        .logo-wrap {
+          width: 63px !important;
+          transition: transform 0.28s;
+        }
       }
+    }
 
-      &::-webkit-scrollbar-thumb {
-        background: #99a9bf;
-        border-radius: 20px;
+    .main-container {
+      margin-left: 54px;
+    }
+
+    .el-sub-menu {
+      overflow: hidden;
+
+      & > .el-sub-menu__title {
+        padding: 0 !important;
+
+        .svg-icon {
+          margin-left: 20px;
+        }
+
+        .sub-el-icon {
+          margin-left: 19px;
+        }
+
+        .el-sub-menu__icon-arrow {
+          display: none;
+        }
       }
+    }
+
+    .el-menu--collapse {
+      .el-sub-menu {
+        & > .el-sub-menu__title {
+          & > span {
+            display: inline-block;
+            width: 0;
+            height: 0;
+            overflow: hidden;
+            visibility: hidden;
+          }
+        }
+      }
+    }
+  }
+
+  .el-menu--collapse .el-menu .el-sub-menu {
+    min-width: $sideBarWidth !important;
+  }
+
+  // mobile responsive
+  .mobile {
+    .main-container {
+      margin-left: 0;
+    }
+
+    .sidebar-container {
+      width: $sideBarWidth !important;
+      transition: transform 0.28s;
+    }
+
+    &.hideSidebar:not(.isMix, .isTop) {
+      .sidebar-container {
+        pointer-events: none;
+        transition-duration: 0.3s;
+        transform: translate3d(-$sideBarWidth, 0, 0);
+      }
+    }
+  }
+
+  .withoutAnimation {
+    .main-container,
+    .sidebar-container {
+      transition: none;
     }
   }
 }
 
-body[layout="top"] {
-  /* 顶部导航栏样式 */
-#app {
-  .header-container {
-    height: 60px;
-    background-color: #ffffff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    display: flex;
-    align-items: center;
-    padding: 0 20px;
-  }
-  
-  .logo {
-    font-size: 24px;
-    font-weight: bold;
-  }
-  
-  .nav-menu {
-    flex: 1;
-    display: flex;
-    justify-content: flex-end;
-  }
-  
-  .nav-menu-item {
-    margin-left: 20px;
-    font-size: 16px;
-    color: #333333;
-    cursor: pointer;
-  }
-}
-  
-}
+// when menu collapsed
+.el-menu--vertical {
+  & > .el-menu {
+    .svg-icon {
+      margin-right: 12px;
+    }
 
-body[layout="mix"] {
+    .sub-el-icon {
+      margin-right: 12px;
+      margin-left: -2px;
+    }
+  }
 
+  .nest-menu .el-sub-menu > .el-sub-menu__title,
+  .el-menu-item {
+    &:hover {
+      // you can use $subMenuHover
+      background-color: $menuHover !important;
+    }
+  }
+
+  // the scroll bar appears when the subMenu is too long
+  > .el-menu--popup {
+    max-height: 100vh;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar-track-piece {
+      background: #d3dce6;
+    }
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #99a9bf;
+      border-radius: 20px;
+    }
+  }
 }

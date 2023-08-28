@@ -1,4 +1,4 @@
-import { RouteRecordRaw } from "vue-router";
+import { RouteRecordRaw, useRouter } from "vue-router";
 import { defineStore } from "pinia";
 import { constantRoutes } from "@/router";
 import { store } from "@/store";
@@ -41,13 +41,15 @@ const filterAsyncRoutes = (routes: RouteRecordRaw[], roles: string[]) => {
 
   routes.forEach((route) => {
     const tmpRoute = { ...route }; // ES6扩展运算符复制新对象
-
+    if (!route.name) {
+      tmpRoute.name = route.path;
+    }
     // 判断用户(角色)是否有该路由的访问权限
     if (hasPermission(roles, tmpRoute)) {
       // console.log("tmpRoute====",tmpRoute)
       if (tmpRoute.component?.toString() == "Layout") {  // 这是目录
         tmpRoute.component = Layout;
-      } else {                                           // 这是菜单 和 外链
+      } else {                                          // 这是菜单 和 外链
         const component = modules[`../../views/${tmpRoute.component}.vue`];
         if (component) {
           // console.log("component=存在==",tmpRoute["component"],"\n当前层级信息: ",tmpRoute["meta"],"\n路由路径: ",tmpRoute["path"] )
@@ -89,7 +91,8 @@ export const usePermissionStore = defineStore("permission", () => {
       // 接口获取所有路由
       listRoutes()
         .then(({ data: asyncRoutes }) => {
-          const accessedRoutes = filterAsyncRoutes(asyncRoutes, roles); // 遍历路由 判断是否存在 不存在转404页面
+          // 根据角色获取有访问权限的路由   // 遍历路由 判断是否存在 不存在转404页面
+          const accessedRoutes = filterAsyncRoutes(asyncRoutes, roles);
           setRoutes(accessedRoutes);  // 设置路由
           resolve(accessedRoutes);    // 返回正确数据
         })
@@ -98,7 +101,19 @@ export const usePermissionStore = defineStore("permission", () => {
         });
     });
   }
-  return { routes, setRoutes, generateRoutes };
+
+  /**
+   * 混合模式左侧菜单
+   */
+  const mixLeftMenu = ref<RouteRecordRaw[]>([]);
+  function getMixLeftMenu(activeTop: string) {
+    routes.value.forEach((item) => {
+      if (item.path === activeTop) {
+        mixLeftMenu.value = item.children || [];
+      }
+    });
+  }
+  return { routes, setRoutes, generateRoutes, getMixLeftMenu, mixLeftMenu };
 });
 
 // 非setup

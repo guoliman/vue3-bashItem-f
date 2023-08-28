@@ -54,14 +54,16 @@ onBeforeUnmount(() => {
 
 <template>
   <div ref="rightPanel" :class="{ show: show }">
-    <div class="right-panel-overlay" />
+    <div class="right-panel-overlay"></div>
     <div class="right-panel-container">
-      <div class="right-panel-btn" :style="{ top: buttonTop + 'px', }" @click="show = !show">
+      <div class="right-panel-btn" :style="{
+        top: buttonTop + 'px',
+      }" @click="show = !show">
         <i-ep-close v-show="show" />
         <i-ep-setting v-show="!show" />
       </div>
       <div>
-        <slot />
+        <slot></slot>
       </div>
     </div>
   </div>
@@ -92,7 +94,8 @@ onBeforeUnmount(() => {
   background-color: var(--el-bg-color-overlay);
   box-shadow: 0 0 15px 0 rgb(0 0 0 / 5%);
   transition: all 0.25s cubic-bezier(0.7, 0.3, 0.1, 1);
-  transform: translate(100%);   /* 把100% 改成 -100%  能实现*/
+  transform: translate(100%);
+  /* 把100% 改成 -100%  能实现*/
 }
 
 .show {
@@ -115,7 +118,7 @@ onBeforeUnmount(() => {
   left: -36px;
   width: 36px;
   height: 36px;
-  // color: var(--el-color-primary);
+  // color: var(--el-color-white);
   text-align: center;
   cursor: pointer;
   // background-color: var(--el-color-white); /* --el-color-white  --el-color-primary */

@@ -1,26 +1,63 @@
 <script setup lang="ts">
 import { useSettingsStore } from "@/store/modules/settings";
-
+import { usePermissionStore } from "@/store/modules/permission";
+import { useAppStore } from "@/store/modules/app";
 import IconEpSunny from "~icons/ep/sunny";
 import IconEpMoon from "~icons/ep/moon";
+import { useRoute } from "vue-router";
 
 /**
  * 暗黑模式
  */
-const settingsStore = useSettingsStore(); // 这是配置
+const settingsStore = useSettingsStore();
+const permissionStore = usePermissionStore();
+const appStore = useAppStore();
 const isDark = useDark();
-// const toggleDark = () => useToggle(isDark);
-const toggleDark = () => {
-  // console.log("isDark===",isDark);
-  useToggle(isDark);
-};
+const toggleDark = () => useToggle(isDark);
 
+function findOutermostParent(tree: any[], findName: string) {
+  let parentMap: any = {};
+
+  function buildParentMap(node: any, parent: any) {
+    parentMap[node.name] = parent;
+
+    if (node.children) {
+      for (let i = 0; i < node.children.length; i++) {
+        buildParentMap(node.children[i], node);
+      }
+    }
+  }
+
+  for (let i = 0; i < tree.length; i++) {
+    buildParentMap(tree[i], null);
+  }
+
+  let currentNode = parentMap[findName];
+  while (currentNode) {
+    if (!parentMap[currentNode.name]) {
+      return currentNode;
+    }
+    currentNode = parentMap[currentNode.name];
+  }
+
+  return null;
+}
+const againActiveTop = (newVal: string) => {
+  const parent = findOutermostParent(permissionStore.routes, newVal);
+  if (appStore.activeTopMenu !== parent.path) {
+    appStore.changeTopActive(parent.path);
+  }
+};
+const route = useRoute();
 /**
  * 切换布局
  */
 function changeLayout(layout: string) {
   settingsStore.changeSetting({ key: "layout", value: layout });
   window.document.body.setAttribute("layout", settingsStore.layout);
+  if (layout === "mix") {
+    route.name && againActiveTop(route.name as string);
+  }
 }
 
 // 主题颜色
@@ -38,7 +75,7 @@ const themeColors = ref<string[]>([
  */
 function changeThemeColor(color: string) {
   document.documentElement.style.setProperty("--el-color-primary", color);
-  settingsStore.changeSetting({ key: "layout", value: color });
+  // settingsStore.changeSetting({ key: "layout", value: color });
 }
 
 onMounted(() => {
@@ -50,6 +87,7 @@ onMounted(() => {
   <div class="settings-container">
     <h3 class="text-base font-bold">项目配置</h3>
     <el-divider>主题</el-divider>
+
     <div class="flex justify-center" @click.stop>
       <el-switch
         v-model="isDark"
@@ -64,17 +102,17 @@ onMounted(() => {
 
     <el-divider>界面设置</el-divider>
     <div class="py-[8px] flex justify-between">
-      <span class="text-xs">标签导航</span>
+      <span class="text-xs">开启 Tags-View</span>
       <el-switch v-model="settingsStore.tagsView" />
     </div>
 
     <div class="py-[8px] flex justify-between">
-      <span class="text-xs">固定Header</span>
+      <span class="text-xs">固定 Header</span>
       <el-switch v-model="settingsStore.fixedHeader" />
     </div>
 
     <div class="py-[8px] flex justify-between">
-      <span class="text-xs">侧边栏Logo</span>
+      <span class="text-xs">侧边栏 Logo</span>
       <el-switch v-model="settingsStore.sidebarLogo" />
     </div>
 
@@ -87,7 +125,7 @@ onMounted(() => {
         class="inline-block w-[30px] h-[30px] cursor-pointer"
         :style="{ background: color }"
         @click="changeThemeColor(color)"
-      />
+      ></li>
     </ul>
 
     <el-divider>导航设置</el-divider>
@@ -97,36 +135,36 @@ onMounted(() => {
         <li
           :class="
             'layout-item layout-left ' +
-            (settingsStore.layout == 'left' ? 'is-active' : '')
+            (settingsStore.layout === 'left' ? 'is-active' : '')
           "
           @click="changeLayout('left')"
         >
-          <div />
-          <div />
+          <div></div>
+          <div></div>
         </li>
       </el-tooltip>
       <el-tooltip content="顶部模式" placement="bottom">
         <li
           :class="
             'layout-item layout-top ' +
-            (settingsStore.layout == 'top' ? 'is-active' : '')
+            (settingsStore.layout === 'top' ? 'is-active' : '')
           "
           @click="changeLayout('top')"
         >
-          <div />
-          <div />
+          <div></div>
+          <div></div>
         </li>
       </el-tooltip>
       <el-tooltip content="混合模式" placement="bottom">
         <li
           :class="
             'layout-item layout-mix ' +
-            (settingsStore.layout == 'mix' ? 'is-active' : '')
+            (settingsStore.layout === 'mix' ? 'is-active' : '')
           "
           @click="changeLayout('mix')"
         >
-          <div />
-          <div />
+          <div></div>
+          <div></div>
         </li>
       </el-tooltip>
     </ul>

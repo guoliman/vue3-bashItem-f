@@ -44,10 +44,10 @@ interface DefaultSettings {
 const defaultSettings: DefaultSettings = {
   title: "vue3-bashItem-f",
   showSettings: true,
-  tagsView: true,     // 标签导航
-  fixedHeader: false, // 固定 Header
-  sidebarLogo: true,  // 侧边栏 Logo
-  layout: "left",
+  tagsView: true,
+  fixedHeader: false,
+  sidebarLogo: true,
+  layout: "mix",  // 设置导航栏样式  left左侧模式、top顶部模式、mix混合模式
   /**
    *  主题模式
    *

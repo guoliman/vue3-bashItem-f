@@ -41,7 +41,7 @@ declare global {
     /**
      * 值
      */
-    value: number;
+    value: string | number;
     /**
      * 文本
      */

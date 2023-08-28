@@ -331,9 +331,10 @@ window.addEventListener('resize', handleResize);
   border-radius: 5px;
   margin-bottom: 20px;
 }
+
 // input框设置
 .input-border {
-    /* 边框颜色为亮电色 */
+  /* 边框颜色为亮电色 */
   border: 1px solid rgb(47, 152, 193);
   /* 边角锐化 */
   border-radius: 4px;
@@ -371,6 +372,7 @@ window.addEventListener('resize', handleResize);
     }
   }
 }
+
 // 按钮设置
 .transparent-button {
   margin-top: 10px;
@@ -380,11 +382,12 @@ window.addEventListener('resize', handleResize);
   border: 1px solid rgb(47, 152, 193) !important;
   /* 边缘锐化 */
   border-radius: 4px;
+
   // 按钮悬浮设置
   &:hover {
-  border-color: #66d9ef !important;
-  color: #66d9ef;
-}
+    border-color: #66d9ef !important;
+    color: #66d9ef;
+  }
 }
 
 /* span横线样式 */
@@ -396,5 +399,4 @@ window.addEventListener('resize', handleResize);
   /* 设置背景大小为100% */
   background-size: 100% 100%;
 }
-
 </style>

@@ -4,7 +4,7 @@ import { useStorage } from "@vueuse/core";
 
 export const useSettingsStore = defineStore("setting", () => {
   // state
-  const tagsView = useStorage<boolean>("tagsView", defaultSettings.tagsView);  // defaultSettings里是定义变量 及默认值
+  const tagsView = useStorage<boolean>("tagsView", defaultSettings.tagsView);
 
   const showSettings = ref<boolean>(defaultSettings.showSettings);
   const fixedHeader = ref<boolean>(defaultSettings.fixedHeader);

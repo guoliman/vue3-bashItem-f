@@ -1,18 +1,19 @@
 export enum MenuTypeEnum {
   /**
-   * 目录 type是2
+   * 目录
    */
-  CATALOG = 'CATALOG',
+  CATALOG = "CATALOG",
   /**
-   * 菜单 type是1
+   * 菜单
    */
-  MENU = 'MENU',
+  MENU = "MENU",
+
   /**
-   * 外链 type是3
+   * 按钮
    */
-  EXTLINK = 'EXTLINK',
+  BUTTON = "BUTTON",
   /**
-   * 按钮 type是4
+   * 外链
    */
-  BUTTON = 'BUTTON',
+  EXTLINK = "EXTLINK",
 }

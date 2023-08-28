@@ -2,14 +2,8 @@
 import { useUserStore } from "@/store/modules/user";
 import { useTransition, TransitionPresets } from "@vueuse/core";
 
-import GithubCorner from "@/components/GithubCorner/index.vue";
-import SvgIcon from "@/components/SvgIcon/index.vue";
-import BarChart from "./components/BarChart.vue";
-import PieChart from "./components/PieChart.vue";
-import RadarChart from "./components/RadarChart.vue";
-
 defineOptions({
-  // eslint-disable-next-line vue/no-reserved-component-names
+  // eslint-disable-next-line
   name: "Dashboard",
   inheritAttrs: false,
 });
@@ -19,15 +13,16 @@ const userStore = useUserStore();
 const date: Date = new Date();
 
 const greetings = computed(() => {
-  if (date.getHours() >= 6 && date.getHours() < 8) {
+  const hours = date.getHours();
+  if (hours >= 6 && hours < 8) {
     return "晨起披衣出草堂，轩窗已自喜微凉🌅！";
-  } else if (date.getHours() >= 8 && date.getHours() < 12) {
+  } else if (hours >= 8 && hours < 12) {
     return "上午好🌞！";
-  } else if (date.getHours() >= 12 && date.getHours() < 18) {
+  } else if (hours >= 12 && hours < 18) {
     return "下午好☕！";
-  } else if (date.getHours() >= 18 && date.getHours() < 24) {
+  } else if (hours >= 18 && hours < 24) {
     return "晚上好🌃！";
-  } else if (date.getHours() >= 0 && date.getHours() < 6) {
+  } else if (hours >= 0 && hours < 6) {
     return "偷偷向银河要了一把碎星，只等你闭上眼睛撒入你的梦中，晚安🌛！";
   }
 });
@@ -90,26 +85,26 @@ orderCount.value = 2000;
             {{ greetings }}
           </div>
 
-          <div class="space-x-2 flex items-center">
+          <div class="space-x-2 flex items-center justify-end">
             <el-link
               target="_blank"
               type="danger"
               href="https://blog.csdn.net/u013737132/article/details/130191394"
-              >官方0到1教程</el-link
+              >💥官方从零到一文档</el-link
             >
             <el-divider direction="vertical" />
             <el-link
               target="_blank"
               type="success"
-              href="https://gitee.com/youlaiorg/vue3-element-admin"
-              >Gitee源码</el-link
+              href="https://gitee.com/youlaiorg"
+              >Gitee</el-link
             >
             <el-divider direction="vertical" />
             <el-link
               target="_blank"
               type="primary"
-              href="https://github.com/youlaitech/vue3-element-admin"
-              >GitHub源码
+              href="https://github.com/youlaitech"
+              >GitHub
             </el-link>
           </div>
         </div>
@@ -127,7 +122,7 @@ orderCount.value = 2000;
           </div>
           <div class="flex flex-col space-y-3">
             <div class="text-[var(--el-text-color-secondary)]">访问数</div>
-            <div class="text-lg">
+            <div class="text-lg text-right">
               {{ Math.round(visitCountOutput) }}
             </div>
           </div>
@@ -144,7 +139,7 @@ orderCount.value = 2000;
           </div>
           <div class="flex flex-col space-y-3">
             <div class="text-[var(--el-text-color-secondary)]">消息数</div>
-            <div class="text-lg">
+            <div class="text-lg text-right">
               {{ Math.round(messageCountOutput) }}
             </div>
           </div>
@@ -160,7 +155,7 @@ orderCount.value = 2000;
           </div>
           <div class="flex flex-col space-y-3">
             <div class="text-[var(--el-text-color-secondary)]">收入金额</div>
-            <div class="text-lg">
+            <div class="text-lg text-right">
               {{ Math.round(amountOutput) }}
             </div>
           </div>
@@ -175,7 +170,7 @@ orderCount.value = 2000;
           </div>
           <div class="flex flex-col space-y-3">
             <div class="text-[var(--el-text-color-secondary)]">订单数</div>
-            <div class="text-lg">
+            <div class="text-lg text-right">
               {{ Math.round(orderCountOutput) }}
             </div>
           </div>
@@ -185,7 +180,7 @@ orderCount.value = 2000;
 
     <!-- Echarts 图表 -->
     <el-row :gutter="40">
-      <el-col :sm="24" :lg="8" class="mb-4">
+      <el-col :sm="24" :lg="8" class="mb-2">
         <BarChart
           id="barChart"
           height="400px"
@@ -194,7 +189,7 @@ orderCount.value = 2000;
         />
       </el-col>
 
-      <el-col :xs="24" :sm="12" :lg="8" class="mb-4">
+      <el-col :xs="24" :sm="12" :lg="8" class="mb-2">
         <PieChart
           id="pieChart"
           height="400px"
@@ -203,7 +198,7 @@ orderCount.value = 2000;
         />
       </el-col>
 
-      <el-col :xs="24" :sm="12" :lg="8" class="mb-4">
+      <el-col :xs="24" :sm="12" :lg="8" class="mb-2">
         <RadarChart
           id="radarChart"
           height="400px"

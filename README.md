@@ -10,7 +10,7 @@
 
 ## 项目介绍
 
-[vue3-bashItem](https://gitee.com/youlaiorg/vue3-element-admin) 是基于 Vue3 + Vite4 + TypeScript5 + Pinia + Element-Plus 等最新主流技术栈构建的后台管理前端模板（配套后端源码）。
+[vue3-bashItem](https://github.com/guoliman/vue3-bashItem-f) 是基于 Vue3 + Vite4 + TypeScript5 + Pinia + Element-Plus 等最新主流技术栈构建的后台管理前端模板（配套后端源码）。
 
 项目有以下特性：
 
@@ -20,7 +20,6 @@
 
 ## 项目预览
 
-<!-- - **在线预览**： [https://vue3.youlai.tech/](https://vue3.youlai.tech/) -->
 
 - **控制台**
 
@@ -31,13 +30,6 @@
  | ![用户管理](https://s2.loli.net/2023/03/13/L9xgT5sSMVZukQj.png) | ![image-20230313003008012](https://s2.loli.net/2023/03/13/nQg6HmrtFUkPDYv.png) |
  | --- | --- |
  | ![image-20230313003028425](https://s2.loli.net/2023/03/13/C4fDRJeTuUO7gPI.png) | ![字典管理](https://s2.loli.net/2023/03/13/BzqjHpa64wfeWhE.png) |
-
-<!-- ## 项目地址
-
-| 项目 | Gitee | Github |GitCode |
-| --- | --- | --- | --- |
-| 前端 | [vue3-element-admin](https://gitee.com/youlaiorg/vue3-element-admin) | [vue3-element-admin](https://github.com/youlaitech/vue3-element-admin) |[vue3-element-admin](https://gitcode.net/youlai/vue3-element-admin)|
-| 后端 | [youlai-boot](https://gitee.com/youlaiorg/youlai-boot) | [youlai-boot](https://github.com/haoxianrui/youlai-boot.git) |[youlai-boot](https://gitcode.net/youlai/youlai-boot)| -->
 
 ## 环境准备
 
