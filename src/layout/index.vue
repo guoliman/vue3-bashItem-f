@@ -72,14 +72,18 @@ function handleOutsideClick() {
 }
 
 function toggleSideBar() {
-  appStore.toggleSidebar(true);
+  appStore.toggleSidebar();
 }
 </script>
 
 <template>
   <div :class="classObj" class="app-wrapper">
     <!-- 手机设备侧边栏打开遮罩层 -->
-    <div v-if="classObj.mobile && classObj.openSidebar" class="drawer-bg" @click="handleOutsideClick"></div>
+    <div
+      v-if="classObj.mobile && classObj.openSidebar"
+      class="drawer-bg"
+      @click="handleOutsideClick"
+    ></div>
 
     <Sidebar class="sidebar-container" />
     <template v-if="layout === 'mix'">
@@ -89,7 +93,10 @@ function toggleSideBar() {
         <div class="left-wrap">
           <LeftMenu :menu-list="mixLeftMenu" :base-path="activeTopMenu" />
           <div class="menu-action">
-            <hamburger :is-active="appStore.sidebar.opened" @toggle-click="toggleSideBar" />
+            <hamburger
+              :is-active="appStore.sidebar.opened"
+              @toggle-click="toggleSideBar"
+            />
           </div>
         </div>
         <Main />

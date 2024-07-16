@@ -1,5 +1,5 @@
 {
-  "name": "vue3-bashItem-f",
+  "name": "vue3-element-admin",
   "private": true,
   "version": "2.6.0",
   "scripts": {
@@ -57,6 +57,7 @@
     "pinia": "^2.0.33",
     "screenfull": "^6.0.0",
     "sortablejs": "^1.15.0",
+    "terser": "^5.19.3",
     "vue": "^3.3.4",
     "vue-i18n": "9.2.2",
     "vue-router": "^4.2.0",
@@ -108,8 +109,8 @@
     "vite-plugin-svg-icons": "^2.0.1",
     "vue-tsc": "^1.7.0 "
   },
-  "repository": "https://github.com/guoliman/vue3-bashItem-f.git",
-  "author": "gavin",
+  "repository": "https://gitee.com/youlaiorg/vue3-element-admin.git",
+  "author": "有来开源组织",
   "license": "MIT",
   "engines": {
     "node": ">=16.0.0"

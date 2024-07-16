@@ -22,21 +22,21 @@ interface DefaultSettings {
    */
   sidebarLogo: boolean;
   /**
-   * 导航栏布局
+   * 导航栏布局 (left|top|mix)
    */
   layout: string;
   /**
-   * 主题模式
+   * 主题模式 (dark|light)
    */
   theme: string;
 
   /**
-   * 布局大小
+   * 布局大小 (default |large |small)
    */
   size: string;
 
   /**
-   * 语言
+   * 语言 ( zh-cn| en)
    */
   language: string;
 }
@@ -47,16 +47,10 @@ const defaultSettings: DefaultSettings = {
   tagsView: true,
   fixedHeader: false,
   sidebarLogo: true,
-  layout: "mix",  // 设置导航栏样式  left左侧模式、top顶部模式、mix混合模式
-  /**
-   *  主题模式
-   *
-   * dark:暗黑模式
-   * light: 明亮模式
-   */
-  theme: "dark",
-  size: "default", // default |large |small
-  language: "zh-cn", // zh-cn| en
+  layout: "left", //  默认左侧模式  left左侧模式、top顶部模式、mix混合模式
+  theme: "dark", // 默认暗黑模式
+  size: "default",
+  language: "zh-cn", // 默认中文
 };
 
 export default defaultSettings;

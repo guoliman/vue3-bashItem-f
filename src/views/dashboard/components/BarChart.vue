@@ -65,7 +65,7 @@ const options = {
   xAxis: [
     {
       type: "category",
-      data: ["浙江", "北京", "上海", "广东", "深圳"],
+      data: ["龙门", "鲲鹏", "消息中心", "智能巡检", "罗伯特"],
       axisPointer: {
         type: "shadow",
       },

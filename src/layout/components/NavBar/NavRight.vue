@@ -14,21 +14,27 @@
   </div>
 
   <!-- 用户头像 -->
-  <el-dropdown trigger="click" style="margin-right: 38px;">
+  <el-dropdown trigger="click" style="margin-right: 38px">
     <div class="avatar-container">
       <!-- 后端存储头像地址  :src="userStore.avatar是使用后端传来的样式   ?imageView2/1/w/80/h/80 是网络地址加载图片时,对图片压缩及像素处理
           @/assets/sys_images/wm.jpg是引用本地头像  -->
       <!-- <img :src="userStore.avatar + '?imageView2/1/w/80/h/80'" style="border-radius: 50%; width: 24px;height: 24px;" /> -->
-      <img src="@/assets/sys_images/wm.jpg" style="border-radius: 50%; width: 24px;height: 24px;" />
-      <span style="margin-left: 5px;">{{ userStore.nickname }}</span>
+      <img
+        src="@/assets/sys_images/wm.jpg"
+        style="width: 24px; height: 24px; border-radius: 50%"
+      />
+      <span style="margin-left: 5px">{{ userStore.nickname }}</span>
       <i-ep-caret-bottom class="w-3 h-3" />
-
     </div>
     <template #dropdown>
       <el-dropdown-menu>
         <router-link to="/">
           <!-- <el-dropdown-item>{{ $t("navbar.dashboard") }}</el-dropdown-item> -->
-          <el-dropdown-item>{{ userStore.username }}的{{ $t("navbar.dashboard") }}</el-dropdown-item>
+          <el-dropdown-item
+            >{{ userStore.username }}---{{
+              $t("navbar.dashboard")
+            }}</el-dropdown-item
+          >
         </router-link>
 
         <!-- <a target="_blank" href="https://github.com/youlaitech/vue3-element-admin">
@@ -46,7 +52,6 @@
         <el-dropdown-item divided @click="logout">
           {{ $t("navbar.logout") }}
         </el-dropdown-item>
-
       </el-dropdown-menu>
     </template>
   </el-dropdown>

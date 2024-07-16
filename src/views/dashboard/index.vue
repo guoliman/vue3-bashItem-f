@@ -86,26 +86,16 @@ orderCount.value = 2000;
           </div>
 
           <div class="space-x-2 flex items-center justify-end">
-            <el-link
-              target="_blank"
-              type="danger"
-              href="https://blog.csdn.net/u013737132/article/details/130191394"
-              >💥官方从零到一文档</el-link
-            >
-            <el-divider direction="vertical" />
+            <!-- <el-link target="_blank" type="danger" -->
+            <!-- href="https://blog.csdn.net/u013737132/article/details/130191394">💥官方从零到一文档</el-link> -->
+            <!-- <el-divider direction="vertical" /> -->
             <el-link
               target="_blank"
               type="success"
               href="https://gitee.com/youlaiorg"
-              >Gitee</el-link
-            >
-            <el-divider direction="vertical" />
-            <el-link
-              target="_blank"
-              type="primary"
-              href="https://github.com/youlaitech"
-              >GitHub
-            </el-link>
+              >公告</el-link
+            ><el-divider direction="vertical" />
+            <!-- <el-link target="_blank" type="primary" href="https://github.com/youlaitech">GitHub</el-link> -->
           </div>
         </div>
       </el-card>
@@ -225,7 +215,7 @@ orderCount.value = 2000;
     position: absolute;
     top: 0;
     right: 0;
-    z-index: 99;
+    z-index: 1; // 99
     border: 0;
   }
 

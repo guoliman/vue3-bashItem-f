@@ -49,16 +49,20 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
       proxy: {
         // 反向代理解决跨域
         [env.VITE_APP_BASE_API]: {
-          target: env.VITE_APP_TARGET_URL, // 后端连接地址
+          target: env.VITE_APP_TARGET_URL,
           changeOrigin: true,
           rewrite: (path) =>
-            path.replace(  new RegExp("^" + env.VITE_APP_BASE_API),  env.VITE_APP_TARGET_BASE_API ), // 替换 /dev-api 为 target 接口地址
+            path.replace(
+              new RegExp("^" + env.VITE_APP_BASE_API),
+              env.VITE_APP_TARGET_BASE_API
+            ), // 替换 /dev-api 为 target 接口地址
         },
       },
     },
     plugins: [
       vue(),
-      UnoCSS({}),
+      // UnoCSS({}),
+      UnoCSS({ hmrTopLevelAwait: false }), //  低版本内核Chrome浏览器，打开浏览器显示空白问题修复
       AutoImport({
         // 自动导入 Vue 相关函数，如：ref, reactive, toRef 等
         imports: ["vue", "@vueuse/core"],
@@ -120,7 +124,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
         ignore: /^\_/,
         mockPath: "mock",
         enable: mode === "development",
-        // https://github.com/anncwb/vite-plugin-mock/issues/9
+        watchFiles: false, // mock 修改导致卡死问题修复
       }),
 
       visualizer({
@@ -184,7 +188,6 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
         "element-plus/es/components/notification/style/css",
         "@vueuse/core",
         "sortablejs",
-
         "path-to-regexp",
         "echarts",
         "@wangeditor/editor",
@@ -192,6 +195,21 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
         "vue-i18n",
         "codemirror",
       ],
+    },
+    // 构建
+    build: {
+      chunkSizeWarningLimit: 2000, // 消除打包大小超过500kb警告
+      minify: "terser", // Vite 2.6.x 以上需要配置 minify: "terser", terserOptions 才能生效
+      terserOptions: {
+        compress: {
+          keep_infinity: true, // 防止 Infinity 被压缩成 1/0，这可能会导致 Chrome 上的性能问题
+          drop_console: true, // 生产环境去除 console
+          drop_debugger: true, // 生产环境去除 debugger
+        },
+        format: {
+          comments: false, // 删除注释
+        },
+      },
     },
   };
 });
